@@ -6,6 +6,8 @@
 #include<ctime>
 using namespace std;
 
+string version="v1.0.1",authour="P Paul Jonathan";
+
 vector <string> split_string(string s,char delim){
     auto j=s.cbegin();
     vector<string> split;
@@ -106,15 +108,40 @@ void ssid(){
     fclose(net);
 }
 
-int main(){
-    while(1){
+void help(){
+    cout<<"pstatus "<<version<<" "<<authour<<"\n";
+    cout<<"Usage: pstatus [options]\n";
+    cout<<"Options:\n";
+    cout<<"\t-h\tDisplay this information and exit.\n";
+    cout<<"\t-v\tDisplay verion and exit.\n";
+    cout<<"\t-o\tDisplay system status once and exit.\n";
+    cout<<"\tnone\tDisplay system status (updates every 2 seconds),\n\t \tcan be used as status bar.";
+}
+
+int main(int argc,char **argv){
+	string option=argv[1]?argv[1]:"";
+	if(option=="-h"){
+        help();
+	}else if(option=="-v"){
+        cout<<version<<"\n";
+    }else if(option=="-o"){
+        cout<<"\r";
         brightness();
         battery();
         volume();
         ssid();
         dt();
-        cout<<"\r";
-        fflush(stdout);
-        sleep(2);
-    }
+	}else{
+	    while(1){
+    	    brightness();
+        	battery();
+	        volume();
+	        ssid();
+	        dt();
+	        cout<<"\r";
+	        fflush(stdout);
+	        sleep(2);
+	    }
+	}
+	return 0;
 }

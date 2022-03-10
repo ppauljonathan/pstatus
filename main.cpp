@@ -6,7 +6,7 @@
 #include<ctime>
 using namespace std;
 
-string version="v1.0.1",authour="P Paul Jonathan";
+string version="v1.0.2",authour="P Paul Jonathan";
 
 vector <string> split_string(string s,char delim){
     auto j=s.cbegin();
@@ -115,6 +115,11 @@ void help(){
     cout<<"\t-h\tDisplay this information and exit.\n";
     cout<<"\t-v\tDisplay verion and exit.\n";
     cout<<"\t-o\tDisplay system status once and exit.\n";
+    cout<<"\t-brt\tDisplay monitor brightness percentage and exit.\n";
+    cout<<"\t-bat\tDisplay remaining battery percentage and exit.\n";
+    cout<<"\t-vol\tDisplay volume percentageand exit.\n";
+    cout<<"\t-net\tDisplay ssid of current network connection and exit.\n";
+    cout<<"\t-dat\tDisplay date and time and exit.\n";
     cout<<"\tnone\tDisplay system status (updates every 2 seconds),\n\t \tcan be used as status bar.";
 }
 
@@ -124,6 +129,16 @@ int main(int argc,char **argv){
         help();
 	}else if(option=="-v"){
         cout<<version<<"\n";
+    }else if(option=="-brt"){
+        brightness();
+    }else if(option=="-bat"){
+        cout<<"|";battery();
+    }else if(option=="-vol"){
+        cout<<"|";volume();
+    }else if(option=="-net"){
+        cout<<"|";ssid();
+    }else if(option=="-dat"){
+        cout<<"|";dt();
     }else if(option=="-o"){
         cout<<"\r";
         brightness();

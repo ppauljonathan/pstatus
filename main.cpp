@@ -18,7 +18,7 @@
 
 using namespace std;
 
-string version="v2.0.1",authour="P Paul Jonathan";
+string version="v2.0.2",authour="P Paul Jonathan";
 
 vector <string> split_string(string s,char delim){
     auto j=s.cbegin();
@@ -73,12 +73,39 @@ void battery(){
 }
 
 void volume(){
-    FILE *vol=popen("pamixer --get-volume-human","r");
-    cout<<" VOL ";
-    char c;
-    while((c=fgetc(vol))!='\n'){cout<<c;}
+    // FILE *vol=popen("pamixer --get-volume-human","r");
+    // cout<<" VOL ";
+    // char c;
+    // while((c=fgetc(vol))!='\n'){cout<<c;}
+    // cout<<" |";
+    // fclose(vol);
+    long min, max, val;
+    int perc, mute;
+    snd_mixer_t *h;
+    snd_mixer_selem_id_t *sid, *mid;
+    const char *card = "default";
+    const char *selem = "Master";
+
+    snd_mixer_open(&h, 0);
+    snd_mixer_attach(h, card);
+    snd_mixer_selem_register(h, NULL, NULL);
+    snd_mixer_load(h);
+
+    snd_mixer_selem_id_alloca(&sid);
+    snd_mixer_selem_id_alloca(&mid);
+    snd_mixer_selem_id_set_index(sid, 0);
+    snd_mixer_selem_id_set_name(sid, selem);
+    snd_mixer_selem_id_set_name(mid, selem);
+    snd_mixer_elem_t *elem = snd_mixer_find_selem(h, sid);
+    snd_mixer_elem_t *mut = snd_mixer_find_selem(h, mid);
+    snd_mixer_selem_get_playback_volume_range(elem,&min,&max);
+    snd_mixer_selem_get_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT, &val);
+    snd_mixer_selem_get_playback_switch(mut, SND_MIXER_SCHN_FRONT_LEFT, &mute);
+    perc=(int)((val * 100) / (max - min));
+    cout<<" VOL "<<perc<<"%";
+    if(mute == 0) {cout<<" (muted)";}
+    snd_mixer_close(h);
     cout<<" |";
-    fclose(vol);
 }
 
 void dt(){

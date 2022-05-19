@@ -1,5 +1,5 @@
 all:
-	g++ main.cpp -lamixer -o pstatus
+	g++ main.cpp -lasound -o pstatus
 add_to_path:
 	sudo mv ./pstatus /usr/bin
 clean:

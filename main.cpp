@@ -15,6 +15,8 @@
 #include <errno.h>
 #include <linux/wireless.h>
 #include <alsa/asoundlib.h>
+#include <time.h>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -153,6 +155,7 @@ void ssid(){
     if(wreq.u.essid.length == 0){cout<<" NO INTERNET";}
     else{printf(" NET %s",wreq.u.essid.pointer);}
     cout<<" |";
+	close(sockfd);
 }
 
 void help(){
@@ -202,7 +205,9 @@ int main(int argc,char **argv){
 	        dt();
 	        cout<<"\r";
 	        fflush(stdout);
-	        sleep(2);
+	        timespec t;
+			t.tv_sec=2;
+			nanosleep(&t,NULL);
 	    }
 	}
 	return 0;

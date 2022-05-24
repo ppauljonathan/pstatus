@@ -15,8 +15,6 @@
 #include <errno.h>
 #include <linux/wireless.h>
 #include <alsa/asoundlib.h>
-#include <time.h>
-#include <sys/time.h>
 
 using namespace std;
 
@@ -205,9 +203,7 @@ int main(int argc,char **argv){
 	        dt();
 	        cout<<"\r";
 	        fflush(stdout);
-	        timespec t;
-			t.tv_sec=2;
-			nanosleep(&t,NULL);
+	        sleep(2);
 	    }
 	}
 	return 0;

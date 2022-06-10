@@ -72,13 +72,7 @@ void battery(){
     bat_file.close();
 }
 
-void volume(){
-    // FILE *vol=popen("pamixer --get-volume-human","r");
-    // cout<<" VOL ";
-    // char c;
-    // while((c=fgetc(vol))!='\n'){cout<<c;}
-    // cout<<" |";
-    // fclose(vol);
+void volume(){ 
     long min, max, val;
     int perc, mute;
     snd_mixer_t *h;
